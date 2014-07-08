@@ -33,7 +33,9 @@ class NewVisitorTest(unittest.TestCase):
         rows = self.browser.find_elements_by_tag_name("tr")
         self.assertTrue(
             any(row.text == "1: Buy some chocolate" for row in rows),
-            "New to-do item did not appear in table"
+            "New to-do item did not appear in table - its text was:\n%s" % (
+                table.text,
+            )
         )
 
         self.fail("Finish the test")
