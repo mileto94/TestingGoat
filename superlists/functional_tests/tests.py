@@ -1,9 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import unittest
+from django.test import LiveServerTestCase
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -15,9 +15,9 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id("id_list_table")
         rows = table.find_elements_by_tag_name("tr")
         self.assertIn(row_text, [row.text for row in rows])
-        
+
     def test_with_wrong_title(self):
-        self.browser.get("http://localhost:8000")
+        self.browser.get(self.live_server_url)
 
         header_text = self.browser.find_element_by_tag_name("h1").text
         self.assertIn("To-Do", self.browser.title)
@@ -39,15 +39,3 @@ class NewVisitorTest(unittest.TestCase):
         self.check_for_row_in_list_table("2: Eat the chocolate")
 
         self.fail("Finish the test")
-
-if __name__ == '__main__':
-    unittest.main(warnings="ignore")
-
-
-# This is the test without using unittest library
-# browser = webdriver.Firefox()
-# browser.get('http://localhost:8000')
-
-# assert 'To do' in browser.title, "Browser title was" + browser.title
-
-# browser.quit()
