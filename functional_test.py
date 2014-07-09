@@ -11,6 +11,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id("id_list_table")
+        rows = table.find_elements_by_tag_name("tr")
+        self.assertIn(row_text, [row.text for row in rows])
+        
     def test_with_wrong_title(self):
         self.browser.get("http://localhost:8000")
 
@@ -23,16 +28,15 @@ class NewVisitorTest(unittest.TestCase):
             inputbox.get_attribute("placeholder"),
             "Enter a to-do item"
         )
-
         # Try entering someting
         inputbox.send_keys("Buy some chocolate")
-
         inputbox.send_keys(Keys.ENTER)
+        self.check_for_row_in_list_table("1: Buy some chocolate")
 
-        table = self.browser.find_element_by_id("id_list_table")
-        rows = self.browser.find_elements_by_tag_name("tr")
-        self.assertIn("1: Buy some chocolate", [row.text for row in rows])
-        self.assertIn("2: Eat the chocolate", [row.text for row in rows])
+        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox.send_keys("Eat the chocolate")
+        inputbox.send_keys(Keys.ENTER)
+        self.check_for_row_in_list_table("2: Eat the chocolate")
 
         self.fail("Finish the test")
 
