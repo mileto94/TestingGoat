@@ -89,7 +89,6 @@ class NewListTest(TestCase):
         )
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.first()
-        print(new_item, new_item.text, new_item.list)
         self.assertEqual(new_item.text, "A new item for an excisting list")
         self.assertEqual(new_item.list, correct_list)
 
