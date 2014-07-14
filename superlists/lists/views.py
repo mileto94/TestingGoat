@@ -7,13 +7,13 @@ def home_page(request):
 
 
 def view_list(request, list_id):
-    # import pudb; pudb.set_trace()
+    # import pudb; pudb.set_trace() # insert pudb to debug
     list_ = List.objects.get(id=list_id)
     return render(request, "list.html", {"list": list_})
 
 
 def new_list(request):
-    # import pudb; pudb.set_trace()
+    # import pudb; pudb.set_trace() # insert pudb to debug
     list_ = List.objects.create()
     Item.objects.create(text=request.POST["item_text"], list=list_)
     return redirect("/lists/%d/" % (list_.id,))
