@@ -130,3 +130,7 @@ class ListViewTest(TestCase):
         self.assertTemplateUsed(response, "list.html")
         expected_error = escape("You can't have an empty list item")
         self.assertContains(response, expected_error)
+
+    def test_get_absolute_url(self):
+        list_ = List.objects.create()
+        self.assertEqual(list_.get_absolute_url(), "/lists/%d/" % (list_.id))
