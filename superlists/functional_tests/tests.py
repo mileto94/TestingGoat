@@ -21,7 +21,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         header_text = self.browser.find_element_by_tag_name("h1").text
         self.assertIn("To-Do", self.browser.title)
-        self.assertIn("To-do", header_text)
+        self.assertIn("To-Do", header_text)
 
     def test_entering_second_person(self):
         self.browser.get(self.live_server_url)
