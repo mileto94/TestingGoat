@@ -61,13 +61,10 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn("Buy some chocolate", page_text)
         self.assertIn("Buy milk", page_text)
 
-        # self.fail("Finish the test")
-
     def test_styling_and_layout(self):
         self.browser.get(self.live_server_url)
         self.browser.set_window_size(1024, 768)
 
-        # inputbox.send_keys("testing\n")
         inputbox = self.browser.find_element_by_id("id_new_item")
         self.assertAlmostEqual(
             inputbox.location["x"] + inputbox.size["width"] / 2,
@@ -82,8 +79,6 @@ class NewVisitorTest(LiveServerTestCase):
         error = self.browser.find_element_by_css_selector(".has-error")
         self.assertEqual(error.text, "You can't have an empty list item")
 
-        self.fail("Cannot add an empty list item")
-
     def test_cannot_add_empty_list_item_after_excisting_item(self):
         self.browser.get(self.live_server_url)
         self.browser.find_element_by_id("id_new_item").send_keys("Buy milk\n")
@@ -92,4 +87,3 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser.find_element_by_id("id_new_item").send_keys("\n")
         error = self.browser.find_element_by_css_selector(".has-error")
         self.assertEqual(error.text, "You can't have an empty list item")
-        self.fail("Cannot add an empty list item after excisting item")
