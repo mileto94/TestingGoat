@@ -1,9 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from django.test import LiveServerTestCase
+from .base import FunctionalTest
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(FunctionalTest):
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -25,10 +25,10 @@ class NewVisitorTest(LiveServerTestCase):
 
     def test_entering_second_person(self):
         self.browser.get(self.live_server_url)
-        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox = self.get_item_input_box()
         self.assertEqual(
             inputbox.get_attribute("placeholder"),
-            "Enter a to-do item"
+            "Enter a To-Do item"
         )
         # Try entering someting
         inputbox.send_keys("Buy some chocolate")
@@ -37,7 +37,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertRegex(milkas_list_url, "/lists/.+")
         self.check_for_row_in_list_table("1: Buy some chocolate")
 
-        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox = self.get_item_input_box()
         inputbox.send_keys("Eat the chocolate")
         inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table("2: Eat the chocolate")
@@ -49,7 +49,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn("Buy some chocolate", page_text)
         self.assertNotIn("Eat the chocolate", page_text)
 
-        inputbox = self.browser.find_element_by_id("id_new_item")
+        inputbox = self.get_item_input_box()
         inputbox.send_keys("Buy milk")
         inputbox.send_keys(Keys.ENTER)
 
@@ -60,30 +60,3 @@ class NewVisitorTest(LiveServerTestCase):
         page_text = self.browser.find_element_by_tag_name("body").text
         self.assertNotIn("Buy some chocolate", page_text)
         self.assertIn("Buy milk", page_text)
-
-    def test_styling_and_layout(self):
-        self.browser.get(self.live_server_url)
-        self.browser.set_window_size(1024, 768)
-
-        inputbox = self.browser.find_element_by_id("id_new_item")
-        self.assertAlmostEqual(
-            inputbox.location["x"] + inputbox.size["width"] / 2,
-            472,
-            delta=5
-        )
-
-    def test_cannot_add_empty_list_items(self):
-        self.browser.get(self.live_server_url)
-        self.browser.find_element_by_id("id_new_item").send_keys("\n")
-
-        error = self.browser.find_element_by_css_selector(".has-error")
-        self.assertEqual(error.text, "You can't have an empty list item")
-
-    def test_cannot_add_empty_list_item_after_excisting_item(self):
-        self.browser.get(self.live_server_url)
-        self.browser.find_element_by_id("id_new_item").send_keys("Buy milk\n")
-        self.check_for_row_in_list_table("1: Buy milk")
-
-        self.browser.find_element_by_id("id_new_item").send_keys("\n")
-        error = self.browser.find_element_by_css_selector(".has-error")
-        self.assertEqual(error.text, "You can't have an empty list item")
