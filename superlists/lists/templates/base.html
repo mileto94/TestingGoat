@@ -12,9 +12,9 @@
       <div class="text-center">
         <h1>{% block header_text %}{% endblock %}</h1>
         <form method="POST" action="{% block form_action %}{% endblock %}">
-          <input name="item_text" class="form-control input-lg" id="id_new_item" placeholder="Enter a to-do item"/>
+          <!-- <input name="item_text" class="form-control input-lg" id="id_new_item" placeholder="Enter a to-do item"/> -->
+            {{ form.text }}
             {% autoescape on %}
-
             {% csrf_token %}
 
             {% endautoescape %}
@@ -39,13 +39,6 @@
 
 </div>
 
-<!-- 
-<div class="jumbotron">
-  <h1>Hello, world!</h1>
-  <p>Hi</p>
-  <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
-</div>
- -->
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" media="screen">
 
