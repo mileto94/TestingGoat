@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
-from lists.models import Item, List
-from lists.forms import ItemForm
+from lists.models import List
+from lists.forms import ItemForm, ExistingListItemForm
 
 
 def home_page(request):
@@ -10,11 +10,10 @@ def home_page(request):
 def view_list(request, list_id):
     # import pudb; pudb.set_trace() # insert pudb to debug
     list_ = List.objects.get(id=list_id)
-    form = ItemForm()
+    form = ExistingListItemForm(for_list=list_)
     if request.method == "POST":
-        form = ItemForm(data=request.POST)
+        form = ExistingListItemForm(for_list=list_, data=request.POST)
         if form.is_valid():
-            # Item.objects.create(text=request.POST["text"], list=list_)
             form.save(for_list=list_)
             return redirect(list_)
     return render(request, 'list.html', {"list": list_, "form": form})
@@ -24,7 +23,6 @@ def new_list(request):
     form = ItemForm(data=request.POST)
     if form.is_valid():
         list_ = List.objects.create()
-        # Item.objects.create(text=request.POST["text"], list=list_)
         form.save(for_list=list_)
         return redirect(list_)
     else:
