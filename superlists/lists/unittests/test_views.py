@@ -92,6 +92,14 @@ class ListViewTest(TestCase):
         self.assertIsInstance(response.context["form"], ItemForm)
         self.assertContains(response, 'name="text"')
 
+    def test_form_save_handles_saving_to_a_list(self):
+        list_ = List.objects.create()
+        form = ItemForm(data={"text": "chocolate"})
+        new_item = form.save(for_list=list_)
+        self.assertEqual(new_item, Item.objects.first())
+        self.assertEqual(new_item.text, "chocolate")
+        self.assertEqual(new_item.list, list_)
+
 
 class NewListTest(TestCase):
     def test_redirects_after_POST(self):
