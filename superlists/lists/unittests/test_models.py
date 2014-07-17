@@ -10,10 +10,6 @@ class ItemModelTest(TestCase):
 
 
 class ListModelTest(TestCase):
-    def test_get_absolute_url(self):
-        list_ = List.objects.create()
-        self.assertEqual(list_.get_absolute_url(), "/lists/%d/" % (list_.id))
-
     def test_item_is_related_to_do_this(self):
         list_ = List.objects.create()
         item = Item()
