@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -61,9 +61,10 @@ WSGI_APPLICATION = 'superlists.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '../database/db.sqlite3'),
     }
 }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
@@ -83,3 +84,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, '../static')
