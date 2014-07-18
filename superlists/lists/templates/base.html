@@ -1,50 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>To-Do lists</title>
-  <metha name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do lists</title>
+    <metha name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="container">
+    <div class="container">
 
-  <div class="row">
-    <div class="col-md-7 col-md-offset-2 jumbotron">
-      <div class="text-center">
-        <h1>{% block header_text %}{% endblock %}</h1>
-        <form method="POST" action="{% block form_action %}{% endblock %}">
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2 jumbotron">
+                <div class="text-center">
+                    <h1>{% block header_text %}{% endblock %}</h1>
+                    <form method="POST" action="{% block form_action %}{% endblock %}">
 
-            {% autoescape on %}
-            {{ form.text }}
-            {% csrf_token %}
-            {% endautoescape %}
+                        {% autoescape on %}
+                        {{ form.text }}
+                        {% csrf_token %}
+                        {% endautoescape %}
 
-            {% if form.errors %}
-              <div class="form-group has-error">
-                <div class="help-block">{{ form.text.errors }}</div>
-              </div>
-            {% endif %}
+                        {% if form.errors %}
+                            <div class="form-group has-error">
+                                <div class="help-block">{{ form.text.errors }}</div>
+                            </div>
+                        {% endif %}
 
-        </form>
-      </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                {% block table %}
+                {% endblock %}
+            </div>
+        </div>
+
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-7 col-md-offset-2">
-      {% block table %}
-      {% endblock %}
-    </div>
-  </div>
+    <script src="/static/qunit.js"></script>
+    <script src="/static/qunit.css"></script>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="/static/list.js"></script>
 
-</div>
 
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" media="screen">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" media="screen">
 
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>
