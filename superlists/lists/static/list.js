@@ -1,7 +1,7 @@
 "use strict";
 
-
-$("input").on("keypress", function() {
+$(document).ready(function() {
+    $("input").on("keypress", function (){ 
     $(".has-error").hide();
+    });
 });
-
